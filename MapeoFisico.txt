@@ -1,0 +1,131 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema Revista
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema Revista
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `Revista` ;
+USE `Revista` ;
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Usuarios` (
+  `user_name` VARCHAR(15) NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  `categorias` VARCHAR(70) NULL,
+  `imagen` MEDIUMBLOB NULL,
+  `tipo` CHAR(1) NOT NULL,
+  `pass` VARCHAR(15) NOT NULL,
+  PRIMARY KEY (`user_name`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Categorias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Categorias` (
+  `id_categoria` INT NOT NULL,
+  `nombre_cat` VARCHAR(20) NOT NULL,
+  PRIMARY KEY (`id_categoria`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Revistas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Revistas` (
+  `id_revista` INT NOT NULL AUTO_INCREMENT,
+  `revista_name` VARCHAR(30) NOT NULL,
+  `categorias` INT NULL,
+  `imagen_pdf` MEDIUMBLOB NULL,
+  `descripcion` VARCHAR(140) NOT NULL,
+  `costo` DECIMAL(8,2) NULL DEFAULT 0,
+  `id_creador` VARCHAR(15) NOT NULL,
+  `fecha_crea` DATE NULL,
+  `reaccionar` TINYINT NOT NULL,
+  `suscripcion` TINYINT NOT NULL,
+  `costo_dia` DECIMAL(8,2) NULL DEFAULT 0,
+  PRIMARY KEY (`id_revista`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Suscripcion`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Suscripcion` (
+  `id_suscrip` INT NOT NULL AUTO_INCREMENT,
+  `id_usuario` VARCHAR(15) NOT NULL,
+  `id_revista` INT NOT NULL,
+  `pagado` TINYINT NOT NULL DEFAULT 1,
+  `fecha_sub` DATE NOT NULL,
+  `fecha_ven` DATE NULL,
+  PRIMARY KEY (`id_suscrip`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Comentarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Comentarios` (
+  `id_reaccion` INT NOT NULL AUTO_INCREMENT,
+  `comentario` VARCHAR(140) NOT NULL,
+  `id_revista` INT NOT NULL,
+  `id_usuario` VARCHAR(15) NOT NULL,
+  `fecha_reac` DATE NOT NULL,
+  `fecha_mod` DATE NULL,
+  PRIMARY KEY (`id_reaccion`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Pago`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Pago` (
+  `id_pago` INT NOT NULL,
+  `usuarios` VARCHAR(15) NOT NULL,
+  `suscripcion` INT NOT NULL,
+  `fecha_pago` DATE NOT NULL,
+  `monto` DECIMAL(8,2) NOT NULL,
+  PRIMARY KEY (`id_pago`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Versiones`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Versiones` (
+  `id_version` INT NOT NULL AUTO_INCREMENT,
+  `version` VARCHAR(25) NOT NULL,
+  `pdf` MEDIUMBLOB NOT NULL,
+  `revista` INT NOT NULL,
+  `fecha_pub` DATE NOT NULL,
+  `comentario` VARCHAR(140) NULL DEFAULT 'Sin comentario de version',
+  PRIMARY KEY (`id_version`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Revista`.`Agrado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Revista`.`Agrado` (
+  `id_agrado` INT NOT NULL AUTO_INCREMENT,
+  `megusta` TINYINT NOT NULL DEFAULT 0,
+  `id_revista` INT NOT NULL,
+  `id_usuario` VARCHAR(15) NOT NULL,
+  `fecha_meg` DATE NOT NULL,
+  PRIMARY KEY (`id_agrado`))
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+

@@ -4,6 +4,8 @@
     Author     : willians
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="Base.Conectado"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -36,7 +38,7 @@
         <%
             HttpSession s = request.getSession();
         %>
-        <%  Conectado c = new Conectado(); 
+        <%  Conectado c = new Conectado();
             String[] cat = c.categorias();
         %>
         <%@include file='nav_bar.html'%>
@@ -46,7 +48,7 @@
                     <img class='imagen' src='../ControladorIMG?user=${usr.user}' alt='no hay'
                          title="${usr.user}" height="85px" width="85px" />
                 </div>
-                    <div class='info'>
+                <div class='info'>
                     <h2 id='usuario1' name='usuario1'>${usr.user}</h2>
                     <p id="nombre" name='nombre'>${usr.nombre}</p>
                     <button class='botoncin'>Editar Perfil</button>
@@ -107,72 +109,81 @@
         </div>
         <div id="derecho" name="derecho">
             <center>
-                
-            <form>
-                <input type="button" onclick="mostrar()" class="add-to-cart" value="Crear una revista" />
-            </form>
-            <div id="alerta">
-                <div class="group">
-                    <label for="nombrer" class="label">Ponle nombre a tu revista</label>
-                    <input id="nombrer" name="nombrer" type="text" class="input" required>
-                </div>
-                <div class="group">
-                    <label for="areat" class="label">Escribe una descripcion de tu revista</label>
-                    <textarea id="areat" name="areat" rows="3" cols="12" required></textarea>
-                </div>
-                <div class="group">
-                    <label for="dinerito" class="label">Costo de suscripcion (0=free)</label>
-                    <input type="number" name="dinerito" min="0" max="1000">
-                </div>
-                <div class="group">
-                    <label for="archivo1" class="label">Selecciona la revista</label>
-                    <input id="archivo1" name="archivo1" type="file" class="input" required>
-                </div>
-                <div class="group">
-                    <label for="start" class="label">Fecha de publicacion</label>
-                    <input type="date" id="start" name="start" value="2019-10-09" min="2008-01-01" max="2019-10-09"
-                           required>
-                </div>
-                <div class="group">
-                    <label for="tipo" class="label">Bloquear reacciones ?</label>
-                    <input type="radio" name="tipo" id="tipo" value="1">Sí
-                    <input type="radio" name="tipo" id="tipo" value="0">No
-                </div>
-                <div class="group">
-                    <label for="tipo2" class="label">Permitir suscripciones ?</label>
-                    <input type="radio" name="tipo2" id="tipo2" value="1">Sí
-                    <input type="radio" name="tipo2" id="tipo2" value="0">No
-                </div>
-                <div class="group">
-                    <label for="categoria" class="label">Cual es la categoria ?</label>
-                    <select name="categoria" id="categoria">
-                        <% for (int i=0; i<cat.length;i++){
+
+                <form>
+                    <input type="button" onclick="mostrar()" class="add-to-cart" value="Crear una revista" id="creare" name="creare"/>
+                </form>
+                <form action="../ControladorPDF" method="POST">
+                    <div id="alerta">
+                        <div class="group">
+                            <label for="nombrer" class="label">Ponle nombre a tu revista</label>
+                            <input id="nombrer" name="nombrer" type="text" class="input" required>
+                        </div>
+                        <div class="group">
+                            <label for="areat" class="label">Escribe una descripcion de tu revista</label>
+                            <textarea id="areat" name="areat" rows="3" cols="12" required></textarea>
+                        </div>
+                        <div class="group">
+                            <label for="dinerito" class="label">Costo de suscripcion (0=free)</label>
+                            <input type="number" name="dinerito" min="0" max="1000">
+                        </div>
+                        <div class="group">
+                            <label for="archivo1" class="label">Selecciona la revista</label>
+                            <input id="archivo1" name="archivo1" type="file" class="input">
+                        </div>
+                        <%
+                            Date dNow = new Date();
+                            SimpleDateFormat ft
+                                    = new SimpleDateFormat("yyyy-MM-dd");
+                            String currentDate = ft.format(dNow);
                         %>
-                        <option><% out.print(cat[i]);%></option>
-                        <%}%>
-                    </select>
-                </div>
-                <div class="group">
-                     <input type="submit" class="button" value="Crear revista">
-                </div>
-            </div>
-        </center>
-                         </div>
-                         <script>
-                             function mostrarMensaje() {
-                                 var popup = document.getElementById("myPopup");
-                                 popup.classList.toggle("show");
-                             }
-                             window.addEventListener("load", mostrar);
-                             function mostrar() {
-                                 var x = document.getElementById('alerta');
-                                 if (x.style.display === 'none') {
-                                     x.style.display = 'block';
-                                 } else {
-                                     x.style.display = 'none';
-                                 }
-                             }
-                         </script>
+
+                        <div class="group">
+                            <label for="start" class="label">Fecha de publicacion</label>
+                            <input type="date" id="start" name="start" value="<%out.print(currentDate);%>" min="2008-01-01" max="<%out.print(currentDate);%>"
+                                   required>
+                        </div>
+                        <div class="group">
+                            <label for="tipo" class="label">Bloquear reacciones ?</label>
+                            <input type="radio" name="tipo" id="tipo" value="1">Sí
+                            <input type="radio" name="tipo" id="tipo" value="0">No
+                        </div>
+                        <div class="group">
+                            <label for="tipo2" class="label">Permitir suscripciones ?</label>
+                            <input type="radio" name="tipo2" id="tipo2" value="1">Sí
+                            <input type="radio" name="tipo2" id="tipo2" value="0">No
+                        </div>
+                        <div class="group">
+                            <label for="categoria" class="label">Cual es la categoria ?</label>
+                            <select name="categoria" id="categoria">
+                                <% for (int i = 0; i < cat.length; i++) {
+                                %>
+                                <option value="<% out.print(cat[i]);%>"><% out.print(cat[i]);%></option>
+                                <%}%>
+                            </select>
+                        </div>
+                        <div class="group">
+                            <input type="submit" class="button" value="Solicitar publicación">
+                        </div>
+                    </div>        
+                </form>
+            </center>
+        </div>
+        <script>
+            function mostrarMensaje() {
+                var popup = document.getElementById("myPopup");
+                popup.classList.toggle("show");
+            }
+            window.addEventListener("load", mostrar);
+            function mostrar() {
+                var x = document.getElementById('alerta');
+                if (x.style.display === 'none') {
+                    x.style.display = 'block';
+                } else {
+                    x.style.display = 'none';
+                }
+            }
+        </script>
 
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>

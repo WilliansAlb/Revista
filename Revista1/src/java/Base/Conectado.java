@@ -6,6 +6,7 @@
 package Base;
 
 import Clases.Excepciones;
+import Clases.Revista;
 import Clases.Usuario;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -28,7 +29,7 @@ public class Conectado {
 
     private final String user = "root";
     private final String password = "Cristeptesico_65";
-    private final String urlConnection = "jdbc:mysql://localhost:3306/Revista104";
+    private final String urlConnection = "jdbc:mysql://localhost:3306/Revista";
     Connection db = null;
     PreparedStatement ps = null;
 
@@ -92,6 +93,7 @@ public class Conectado {
         } catch (SQLException ex) {
         }
     }
+    
     public void crearConImg(Usuario usuarios){
         
         String sql= "INSERT INTO Usuarios(user_name,nombre,imagen,tipo,pass) VALUES(?,?,?,?,?)";
@@ -137,6 +139,7 @@ public class Conectado {
             s.print(ex.getMessage());
         }   
     }
+   
     public Usuario aspectos(String user){
         String sql = "SELECT * FROM Usuarios WHERE user_name= ?";
         Usuario nuevo = new Usuario();
@@ -185,6 +188,37 @@ public class Conectado {
         return categorias;
     }
 
+    public void crearRevista(Revista r){
+        String sql0 = "SELECT id_categoria FROM Categorias WHERE nombre_cat = ?";
+        int categoria = 0;
+        try{
+            ps = db.prepareStatement(sql0);
+            ps.setString(1, r.getCategorias());
+            ResultSet res = ps.executeQuery();
+            while(res.next()){
+                categoria = res.getInt("id_categoria");
+            }
+        } catch (SQLException esa){
+        
+        }
+        
+        String sql = "INSERT INTO Revistas(revista_name,categorias,descripcion,costo,id_creador,fecha_crea,publicada,reaccionar,suscripcion) VALUES(?,?,?,?,?,?,?,?,?)";
+        try {
+            ps = db.prepareStatement(sql);
+            ps.setString(1, r.getRevista_name());
+            ps.setInt(2,categoria);
+            ps.setString(3, r.getDescripcion());
+            ps.setDouble(4, r.getCosto());
+            ps.setString(5, r.getId_creador());
+            ps.setString(6, r.getFecha_crea());
+            ps.setBoolean(7, false);
+            ps.setBoolean(8, r.isReaccionar());
+            ps.setBoolean(9, r.isSuscripcion());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+        }
+    }
+    
     public Connection getDb() {
         return db;
     }

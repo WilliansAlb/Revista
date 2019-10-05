@@ -52,6 +52,7 @@ public class CrearUsuario extends HttpServlet {
         if (inputStream != null && paso) {
             usuarios.setArchivo(inputStream);
             cdb.crearConImg(usuarios);
+            s.setAttribute("usuario", usuarios.getUser());
             s.setAttribute("usr", cdb.aspectos(usuarios.getUser()));
             response.sendRedirect("views/perfil.jsp");
         } else {

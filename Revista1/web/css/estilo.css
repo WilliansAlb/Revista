@@ -501,7 +501,7 @@ label{
 .dropdown:hover .dropdown-content {display: block;}
 .dropdown:hover .dropbtn {background-color: grey;}
 #areat{
-    width: 80%;
+    width: 90%;
 }
 
 #archivo1{
@@ -518,4 +518,7 @@ select{
 }
 option{
     font-size: 10px;
+}
+#creare{
+    margin: 10px 0px 0px 5px;
 }
