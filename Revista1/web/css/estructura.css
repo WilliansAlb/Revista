@@ -1,0 +1,40 @@
+html,body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+} 
+#caja { 
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    background-color:#ffc;
+} 
+#izquierdo { 
+    width: 20%;
+    height: 100%;
+    background-color: #111; 
+    float:left;
+}
+#central{ 
+    width: 60%;
+    height: 100%;
+    float: left;
+    background-color: #fff;
+    overflow: auto;
+} 
+#derecho { 
+    color: chartreuse;
+    width: 20%;
+    height: 100%;
+    background-color: #111; 
+    float:right;
+}
+h1{
+    text-align: center;
+}
+p{
+    margin: 10px;
+    color: chartreuse;
+}
