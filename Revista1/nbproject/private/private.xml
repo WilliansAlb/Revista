@@ -3,15 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/src/java/Servlets/InicioSesion.java</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/web/index.jsp</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/web/css/crear_us.css</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/src/java/Base/Conectado.java</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/web/css/estilo.css</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/web/views/vista_crear.html</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/src/java/Clases/Usuario.java</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/web/views/perfil.jsp</file>
-            <file>file:/home/yelbetto/NetBeansProjects/Revista1/src/java/Servlets/CrearUsuario.java</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/views/crear_usuario.jsp</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/css/estilo.css</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/index.jsp</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/css/nav.css</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/views/navbar1.jsp</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/css/crear_us.css</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/css/all_css.html</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/views/perfil.jsp</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/web/css/estructura.css</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/src/java/Base/Conectado.java</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/src/java/Servlets/InicioSesion.java</file>
+            <file>file:/home/yelbetto/Escritorio/ProyectosIPC2/Revista1/src/java/Servlets/CrearUsuario.java</file>
         </group>
     </open-files>
 </project-private>

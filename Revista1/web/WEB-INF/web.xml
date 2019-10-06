@@ -12,6 +12,10 @@
         <servlet-name>ControladorV</servlet-name>
         <servlet-class>Servlets.ControladorV</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Busqueda</servlet-name>
+        <servlet-class>Servlets.Busqueda</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorIMG</servlet-name>
         <url-pattern>/ControladorIMG</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>ControladorV</servlet-name>
         <url-pattern>/ControladorV</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Busqueda</servlet-name>
+        <url-pattern>/Busqueda</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

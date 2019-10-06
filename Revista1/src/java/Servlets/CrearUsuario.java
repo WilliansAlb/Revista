@@ -46,17 +46,21 @@ public class CrearUsuario extends HttpServlet {
             } catch (Exception ex) {
             }
         }
-
-        
         HttpSession s = request.getSession();
         if (inputStream != null && paso) {
             usuarios.setArchivo(inputStream);
             cdb.crearConImg(usuarios);
             s.setAttribute("usuario", usuarios.getUser());
-            s.setAttribute("usr", cdb.aspectos(usuarios.getUser()));
+            Usuario users = cdb.aspectos(usuarios.getUser());
+            users.setUser(usuarios.getUser());
+            s.setAttribute("usr", users);
             response.sendRedirect("views/perfil.jsp");
         } else {
             cdb.crear(usuarios);
+            s.setAttribute("usuario", usuarios.getUser());
+            Usuario users = cdb.aspectos(usuarios.getUser());
+            users.setUser(usuarios.getUser());
+            s.setAttribute("usr", users);
             response.sendRedirect("views/perfil.jsp");
         }
         

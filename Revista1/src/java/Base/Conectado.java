@@ -19,6 +19,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -140,6 +141,26 @@ public class Conectado {
         }   
     }
    
+    public Usuario[] nombreU(String palabra){
+        String sql = "SELECT user_name FROM Usuarios WHERE nombre LIKE '"+palabra+"%' OR nombre LIKE '%"+palabra+"%' OR nombre LIKE '%"+palabra+"' OR user_name LIKE '"+palabra+"%'";
+        ArrayList<Usuario> nombreArrayList = new ArrayList<>();
+        try{
+            ps = db.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                nombreArrayList.add(aspectos(rs.getString("user_name")));
+            }
+        }catch(SQLException esla){
+        
+        }
+        int tamanio = nombreArrayList.size();
+        Usuario nombre[] = new Usuario[tamanio];
+        for (int i = 0; i < tamanio; i++){
+            nombre[i] = nombreArrayList.get(i);
+        }
+        return nombre;
+    }
+    
     public Usuario aspectos(String user){
         String sql = "SELECT * FROM Usuarios WHERE user_name= ?";
         Usuario nuevo = new Usuario();
@@ -268,7 +289,28 @@ public class Conectado {
         }
         return total;
     }
-    
+   
+    public Revista[] nombreR(String palabra){
+        String sql = "SELECT id_revista, id_creador FROM Revistas WHERE (revista_name LIKE '"+palabra+"%' OR revista_name LIKE '%"+palabra+"%' OR revista_name LIKE '%"+palabra+"') AND publicada = true";
+        int contador = 0;
+        ArrayList<Revista> nombreArrayList = new ArrayList<>();
+        try{
+            ps = db.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                nombreArrayList.add(nombreRevistas(rs.getString("id_creador"),rs.getInt("id_revista")));
+                nombreArrayList.get(contador).setId_creador(rs.getString("id_creador"));
+                contador++;
+            }
+        }catch(SQLException esl){
+        }
+        int tamanio = nombreArrayList.size();
+        Revista nombre[] = new Revista[tamanio];
+        for (int i = 0; i < tamanio; i++){
+            nombre[i] = nombreArrayList.get(i);
+        }
+        return nombre;
+    }
     public Revista nombreRevistas(String user, int revistas1){
         Revista rev = new Revista();
         rev.setId_revista(revistas1);
@@ -319,5 +361,41 @@ public class Conectado {
         
         }
         return id;
+    }
+    public boolean busqueda(String palabra, String r){
+        
+        String sql = "SELECT COUNT(*) AS total FROM Revistas WHERE (revista_name LIKE '"+palabra+"%' OR revista_name LIKE '%"+palabra+"%' OR revista_name LIKE '%"+palabra+"') AND publicada = true";
+        int total = 0;
+        try{
+            ps = db.prepareStatement(sql);
+            ResultSet rs2 = ps.executeQuery();
+            while(rs2.next()){
+                total = rs2.getInt("total");
+            }
+        }catch(SQLException es){
+        
+        }
+        
+        String sql0 = "SELECT COUNT(*) AS total FROM Usuarios WHERE nombre LIKE '"+palabra+"%' OR nombre LIKE '%"+palabra+"%' OR nombre LIKE '%"+palabra+"' OR user_name LIKE '"+palabra+"%'";
+        int total2 = 0;
+        try{
+            ps = db.prepareStatement(sql0);
+            ResultSet rs3 = ps.executeQuery();
+            while(rs3.next()){
+                total2 = rs3.getInt("total");
+            }
+        }catch(SQLException es){
+        
+        }
+        
+        
+        if (r.equalsIgnoreCase("r")){
+        return total>0;
+        } else if (r.equalsIgnoreCase("u")){
+        return total2>0;
+        } else {
+        return (total>0 || total2>0);
+        }
+        
     }
 }

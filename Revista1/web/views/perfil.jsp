@@ -248,6 +248,7 @@
                         <input type="button" class="add-to-cart" value="Quieres ser editor?" id="creare" name="creare"/>
                     </form>
                 </c:if>
+                <button>
             </center>
         </div>
         <script>

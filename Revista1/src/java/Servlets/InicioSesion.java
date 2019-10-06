@@ -37,6 +37,8 @@ public class InicioSesion extends HttpServlet {
             s.setAttribute("usuario", request.getParameter("user1"));
             s.setAttribute("usr", usuarios);
             response.sendRedirect("views/perfil.jsp");
+        } else {
+            response.sendRedirect("index.jsp");
         }
     }
 
