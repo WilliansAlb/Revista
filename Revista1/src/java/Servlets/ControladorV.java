@@ -5,10 +5,8 @@
  */
 package Servlets;
 
-import Base.Conectado;
-import Clases.Revista;
+import Clases.Versiones;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -16,15 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 /**
  *
  * @author yelbetto
  */
-@WebServlet(name = "ControladorPDF", urlPatterns = {"/ControladorPDF"})
+@WebServlet(name = "ControladorV", urlPatterns = {"/ControladorV"})
 @MultipartConfig(maxFileSize = 16177215)
-public class ControladorPDF extends HttpServlet {
+public class ControladorV extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +40,10 @@ public class ControladorPDF extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ControladorPDF</title>");            
+            out.println("<title>Servlet ControladorV</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ControladorPDF at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ControladorV at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -78,23 +75,7 @@ public class ControladorPDF extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Revista rev = new Revista();
-        rev.rellenarRevista(request);
-        Conectado cdb = new Conectado();
-        
-        cdb.crearRevista(rev);
-        InputStream inputStream = null;
-        try {
-            Part filePart = request.getPart("archivo1");
-            if (filePart.getSize() > 0) {
-                inputStream = filePart.getInputStream();
-            }
-        } catch (Exception ex) {
-            System.out.println("fichero: "+ex.getMessage());
-        }
-        rev.setArchivopdf(inputStream);
-        cdb.agregarVersion(rev);
-        response.sendRedirect("views/perfil.jsp");
+        Versiones ver = new Versiones();
     }
 
     /**

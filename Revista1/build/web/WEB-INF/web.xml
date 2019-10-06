@@ -8,6 +8,10 @@
         <servlet-name>ControladorPDF</servlet-name>
         <servlet-class>Servlets.ControladorPDF</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControladorV</servlet-name>
+        <servlet-class>Servlets.ControladorV</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorIMG</servlet-name>
         <url-pattern>/ControladorIMG</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ControladorPDF</servlet-name>
         <url-pattern>/ControladorPDF</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControladorV</servlet-name>
+        <url-pattern>/ControladorV</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

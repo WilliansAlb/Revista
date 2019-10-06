@@ -382,14 +382,20 @@ label{
     to {opacity:1 ;}
 }
 
-#alerta{
+#alerta,
+#alerta1{
     margin-top:1 0px;
     display: none;
     width: 95%;
     background-color: #2b2142;
 }
+#dinerito{
+    width: 60px;
+    
+}
 
-#alerta p{
+#alerta p,
+#alerta1 p{
     color: mediumseagreen;
 }
 
@@ -521,4 +527,31 @@ option{
 }
 #creare{
     margin: 10px 0px 0px 5px;
+}
+.revistas{
+    display: -webkit-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.revistas img{
+    margin: 10px;
+}
+#rev{
+    background-color: aquamarine;
+    margin: 10px;
+    border-radius: 0px 0px 0px 20px;
+    -moz-border-radius: 0px 0px 0px 20px;
+    -webkit-border-radius: 0px 0px 0px 20px;
+    -webkit-box-shadow: 10px 10px 20px -7px rgba(56,26,56,1);
+    -moz-box-shadow: 10px 10px 20px -7px rgba(56,26,56,1);
+    box-shadow: 10px 10px 20px -7px rgba(56,26,56,1);
+}
+.revistas .rev p,
+.revistas .rev a{
+    display: block;
+    color: black;
+    margin: 5px;
+    font-size: 10px;
 }

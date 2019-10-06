@@ -1,0 +1,113 @@
+/*Eliminamos los margenes y paddings que agrega el navegador por defecto*/
+* {
+  padding: 0;
+  margin: 0;
+}
+
+
+#hola {
+  background-color: #181227;
+  width: 100%;
+  position: relative;
+  z-index: 100;
+}
+
+nav { /* Desplazamos el nav hacia la izquierda */
+  height: 65px;
+}
+
+nav ul {
+  list-style: none;
+  overflow: hidden; /* Limpiamos errores de float */
+}
+
+nav ul li {
+  float: left;
+  font-family: Ari0al, sans-serif;
+  font-size: 16px;
+}
+
+nav ul li a {
+  display: block; /* Convertimos los elementos a en elementos bloque para manipular el padding */
+  padding: 20px;
+  color: #fff;
+  text-decoration: none;
+}
+
+nav ul li:hover {
+  background-color: #773657;
+}
+
+#probando{
+    height: 100%;
+    padding: 10px;
+}
+#pad{
+    height: 100%;
+    display: block;
+    padding: 0%;
+    text-align: center;
+}
+#foto{
+    margin: 5px 0px 0px;
+    vertical-align: middle;
+}
+
+#formbuscar{
+    margin: 15px 5px 5px;
+    float: right;
+}
+#buscar{
+    margin: 0px 0px 0px 0px;
+    float: left;
+}
+
+.botonimagen{
+    display: inline-block;
+    margin: 0px 5px 5px 5px;
+    background-image:url(https://static.thenounproject.com/png/101791-200.png);
+    background-repeat:no-repeat;
+    background-size: cover;
+    height:30px;
+    width:30px;
+    background-position:center;
+}
+
+ul > li {
+    float:left;
+}
+
+ul li a {
+    background-color:#181227;
+    color:#fff;
+    text-decoration:none;
+    padding:10px 12px;
+    display:block;
+}
+
+ul li a:hover {
+    background-color:#434343;
+}
+
+ul li ul {
+    display:none;
+    position:absolute;
+    min-width:140px;
+}
+
+ul li:hover > ul {
+    display:block;
+    text-decoration: none;
+}
+
+ul li ul li {
+    position:relative;
+}
+
+ul li ul li ul {
+    right:0px;
+    top:0px;
+}
+header nav ul li a{
+    text-decoration: none;
+}

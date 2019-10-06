@@ -227,4 +227,97 @@ public class Conectado {
         this.db = db;
     }
     
+    public void agregarVersion(Revista rev){
+        String sql0 = "SELECT id_revista FROM Revistas WHERE revista_name = ?";
+        int revista = 0;
+        try{
+            ps = db.prepareStatement(sql0);
+            ps.setString(1, rev.getRevista_name());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                revista = rs.getInt("id_revista");
+            }
+        }catch(SQLException ess){
+        
+        }
+        String sql = "INSERT INTO Versiones(version,pdf,revista,fecha_pub,comentario) VALUES(?,?,?,?,?)";
+        try {
+            ps = db.prepareStatement(sql);
+            ps.setString(1, "Primera edición");
+            ps.setBlob(2, rev.getArchivopdf());
+            ps.setInt(3, revista);
+            ps.setString(4, rev.getFecha_crea());
+            ps.setString(5, rev.getDescripcion());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    public int tieneRevistas(String user){
+        String sql = "SELECT COUNT(*) AS total FROM Revistas WHERE id_creador = ?";
+        int total = 0;
+        try{
+            ps = db.prepareStatement(sql);
+            ps.setString(1, user);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                total = rs.getInt("total");
+            }
+        }catch(SQLException es){
+        
+        }
+        return total;
+    }
+    
+    public Revista nombreRevistas(String user, int revistas1){
+        Revista rev = new Revista();
+        rev.setId_revista(revistas1);
+        String sql = "SELECT revista_name,categorias,descripcion,costo,fecha_crea,publicada FROM Revistas WHERE id_creador = ? AND id_revista = ?";
+        int categorias = 0;
+        try{
+            ps = db.prepareStatement(sql);
+            ps.setString(1,user);
+            ps.setInt(2, revistas1);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                rev.setRevista_name(rs.getString("revista_name"));
+                categorias = rs.getInt("categorias");
+                rev.setDescripcion(rs.getString("descripcion"));
+                rev.setCosto(rs.getDouble("costo"));
+                rev.setFecha_crea(rs.getDate("fecha_crea").toString());
+                rev.setPublicada(rs.getBoolean("publicada"));
+            }
+        }catch(SQLException esa){
+        
+        }
+        String sql0 = "SELECT nombre_cat FROM Categorias WHERE id_categoria = ?";
+        try{
+            ps = db.prepareStatement(sql0);
+            ps.setInt(1, categorias);
+            ResultSet rs3 = ps.executeQuery();
+            while(rs3.next()){
+                rev.setCategorias(rs3.getString(sql0));
+            }
+        }catch(SQLException el){
+        
+        }
+        return rev;
+    }
+    public int[] nombreRevs(String user, int tiene){
+        String sql = "SELECT id_revista FROM Revistas WHERE id_creador = ?";
+        int[] id = new int[tiene];
+        int contador = 0;
+        try{
+            ps = db.prepareStatement(sql);
+            ps.setString(1,user);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                id[contador] = rs.getInt("id_revista");
+                contador++;
+            }
+        }catch(SQLException esa){
+        
+        }
+        return id;
+    }
 }
