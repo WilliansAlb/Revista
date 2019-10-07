@@ -7,9 +7,12 @@ package Servlets;
 
 import Base.Conectado;
 import Clases.Revista;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -37,18 +40,34 @@ public class ControladorPDF extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ControladorPDF</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ControladorPDF at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        response.setContentType("application/pdf");
+
+        Conectado con = new Conectado();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        byte[] b = null;
+
+        try {
+
+            int id = Integer.parseInt(request.getParameter("idv"));
+            ps = con.getDb().prepareStatement("SELECT pdf FROM Versiones WHERE id_version = ?;");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                b = rs.getBytes(1);
+            }
+            InputStream bos = new ByteArrayInputStream(b);
+
+            int tamanoInput = bos.available();
+            byte[] datosPDF = new byte[tamanoInput];
+            bos.read(datosPDF, 0, tamanoInput);
+
+            response.getOutputStream().write(datosPDF);
+            bos.close();
+            ps.close();
+            rs.close();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 

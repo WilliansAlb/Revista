@@ -4,7 +4,13 @@
     Author     : yelbetto
 --%>
 
+<%@page import="Clases.Versiones"%>
+<%@page import="Clases.Revista"%>
+<%@page import="Clases.Usuario"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="Base.Conectado"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -17,25 +23,34 @@
         <title>Document</title>
         <link type="text/css" rel="stylesheet" href="../css/nav.css" />
         <link type="text/css" rel="stylesheet" href="../css/cs1.css" />
+
     </head>
 
     <body>
+        <script src="https://code.jquery.com/jquery-2.0.3.js"></script>
         <%
             HttpSession s = request.getSession();
         %>
         <%  Conectado c = new Conectado();
+            Revista rev2 = c.nombreRevistas(Integer.parseInt(s.getAttribute("idrev").toString()));
+            rev2.setId_revista(Integer.parseInt(s.getAttribute("idrev").toString()));
+            rev2.setId_creador(s.getAttribute("idrev").toString());
             String[] cat = c.categorias();
+            Usuario u = c.aspectos(s.getAttribute("idcrear").toString());
+            u.setUser(s.getAttribute("idcrear").toString());
+            s.setAttribute("creadorev", u);
+            Versiones[] version = c.rellenandoV(rev2.getId_revista());
         %>
         <%@include file="navbar1.jsp" %>
         <div name="izquierdo" id="izquierdo">
             <div id="datosu" name='datosu'>
                 <div class='imagenes'>
-                    <img class='imagen' src='../ControladorIMG?user=${usr.user}'
-                         alt='no hay' title="${usr.user}" height="85px" width="85px" />
+                    <img class='imagen' src='../ControladorIMG?user=${viendor.getId_creador()}'
+                         alt='no hay' title="${viendor.getId_creador()}" height="85px" width="85px" />
                 </div>
                 <div class='info'>
-                    <h2 id='usuario1' name='usuario1'>${usr.user}</h2>
-                    <p id="nombre" name='nombre'>${usr.nombre}</p>
+                    <h2 id='usuario1' name='usuario1'>${viendor.getId_creador()}</h2>
+                    <p id="nombre" name='nombre'>${creadorev.nombre}</p>
                     <p>Creador</p>
                 </div>
             </div>
@@ -44,24 +59,20 @@
                     <h1>Datos de la revista</h1>
                     <div id="flex" name="flex">
                         <label>Descripcion</label>
-                        <p id="justi" name="justi">Acá irá toda la descripción Lorem ipsum dolor, sit amet consectetur
-                            adipisicing elit. Possimus
-                            praesentium repellendus consequuntur dicta facere laboriosam, vero aut sunt adipisci sed
-                            ducimus.
-                            Tempora nisi minus aperiam reiciendis accusantium? Atque, perspiciatis tempora?</p>
+                        <p id="justi" name="justi">${viendor.getDescripcion()}</p>
 
                     </div>
                     <div id="flex" name="flex">
                         <label>Costo de Suscripción</label>
-                        <p>Q2132.00</p>
+                        <p>${viendor.getCosto()}</p>
                     </div>
                     <div id="flex" name="flex">
                         <label>Categoria</label>
-                        <p>Acá irá la categoria</p>
+                        <p>${viendor.getCategorias()}</p>
                     </div>
                     <div id="flex" name="flex">
                         <label>Fecha de publicación</label>
-                        <p>1821-21-12</p>
+                        <p>${viendor.getFecha_crea()}</p>
                     </div>
                     <div id="flex" name="flex">
                         <label># de ediciones</label>
@@ -77,76 +88,43 @@
                     Ediciones
                 </h2>
             </center>
-            <hr width="80%" />
+            <hr width="100%" />
+            <%
+
+            %>
             <div id="revistas" name="revistas" class="revistas">
                 <center>
+                    <% if (version.length > 0) {
+                            for (int i = 0; i < version.length; i++) {
+                    %>
                     <div name="rev" id="rev" class="rev">
                         <center>
                             <img src="../img/revista1.png" width="90px" heigth="90px" alt="imagen del pdf">
-                            <p>${nombrerev.revista_name}</p>
-                            <p>Publicada: ${nombrerev.publicada}</p>
-                            <p>Creada: ${nombrerev.fecha_crea}</p>
-                            <form>
-                                <input type="button" onclick="mostrar1()" class="add-to-cart" value="Ver" id="creare"
-                                       name="creare" />
-                            </form>
+                            <p><%out.print(version[i].getVersion());%></p>
+                            <p>Publicada: <%out.print(version[i].getFecha_pub());%></p>
+                            <p>Comentario: <%out.print(version[i].getComentario());%></p>
+                            <a href="../ControladorV?idrevista=<%out.print(version[i].getId_version());%>"><button>Ver</button></a>
                         </center>
                     </div>
-                    <div name="rev" id="rev" class="rev">
-                        <center>
-                            <img src="../img/revista1.png" width="90px" heigth="90px" alt="imagen del pdf">
-                            <p>${nombrerev.revista_name}</p>
-                            <p>Publicada: ${nombrerev.publicada}</p>
-                            <p>Creada: ${nombrerev.fecha_crea}</p>
-                            <form>
-                                <input type="button" onclick="mostrar1()" class="add-to-cart" value="Ver" id="creare"
-                                       name="creare" />
-                            </form>
-                        </center>
-                    </div>
-                    <div name="rev" id="rev" class="rev">
-                        <center>
-                            <img src="../img/revista1.png" width="90px" heigth="90px" alt="imagen del pdf">
-                            <p>${nombrerev.revista_name}</p>
-                            <p>Publicada: ${nombrerev.publicada}</p>
-                            <p>Creada: ${nombrerev.fecha_crea}</p>
-                            <form>
-                                <input type="button" onclick="mostrar1()" class="add-to-cart" value="Ver" id="creare"
-                                       name="creare" />
-                            </form>
-                        </center>
-                    </div>
-                    <div name="rev" id="rev" class="rev">
-                        <center>
-                            <img src="../img/revista1.png" width="90px" heigth="90px" alt="imagen del pdf">
-                            <p>${nombrerev.revista_name}</p>
-                            <p>Publicada: ${nombrerev.publicada}</p>
-                            <p>Creada: ${nombrerev.fecha_crea}</p>
-                            <form>
-                                <input type="button" onclick="mostrar1()" class="add-to-cart" value="Ver" id="creare"
-                                       name="creare" />
-                            </form>
-                        </center>
-                    </div>
+                    <%}}%>
                 </center>
 
             </div>
-            <div id="vista" name="vista">
+                    <% if (s.getAttribute("versiont")!=null){%>
+                    <div id="vista" name="vista" style="display:block;">
                 <center>
                     <h2>
-                        Vista de la edicion
+                        ${versiont.getVersion()}
                     </h2>
                 </center>
-                <hr width="80%" />
+                <hr width="100%" />
                 <center>
                     <embed
-                        src="https://www.ucm.es/data/cont/docs/119-2014-02-19-Carroll.ATravesDelEspajo.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                        src="../ControladorPDF?idv=${versiont.getId_version()}#toolbar=0&navpanes=0&scrollbar=0"
                         type="application/pdf" width="60%" height="400px" />
                 </center>
                 <div id="divd" name="divd" style="background-color: brown">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto illum, quae, doloribus autem quidem
-                    rem iusto dicta, incidunt provident corporis expedita quasi! Illum aut adipisci quos esse aliquid
-                    veniam. Quibusdam!
+                    ${versiont.getComentario()}
                 </div>
                 <h3>Reacciones</h3>
                 <div class='comentarios1'>
@@ -165,17 +143,73 @@
                     <textarea name="interes1" id="interes1" rows="5" cols="10" placeholder="Escribe algo chido">
                     </textarea>
                 </div>
-            </div>
+                             <%s.setAttribute("versiont",null);%>
+            </div><%}%>
+                <hr width="50%" style="margin:50px;"/>
         </div>
         <div name="derecho" id="derecho">
-            <form>
-                <input type="button" onclick="mostrar()" class="add-to-cart" value="Suscribete por tan solo " id="creare"
-                       name="creare" />
+            <center>
+                <form>
+                    <input type="button" onclick="mostrar()" class="add-to-cart" value="Suscribete" id="creare"
+                           name="creare" />
+                </form>
+            </center>
+
+            <form action="../Pagos" method="POST" enctype="multipart/form-data">
+                <center>
+                    <div id="alerta">
+                        <div class="group">
+                            <label for="dinerito" class="label">Cuanto será el monto que pagaras?</label>
+                            <input type="number" name="dinerito" id="dinerito" step="${viendor.getCosto()}" title="Al colocar cero la revista es gratis" min="0">
+                        </div>
+                        <%
+                            Date dNow = new Date();
+                            SimpleDateFormat ft
+                                    = new SimpleDateFormat("yyyy-MM-dd");
+                            String currentDate = ft.format(dNow);
+                        %>
+
+                        <div class="group">
+                            <label for="start" class="label">Fecha de pago</label>
+                            <input type="date" id="start" name="start" value="<%out.print(currentDate);%>" min="2008-01-01" max="<%out.print(currentDate);%>"
+                                   required>
+                        </div>
+                        <div class="group">
+                            <input type="submit" class="button" value="Pagar suscripcion">
+                        </div>
+                    </div>
+                </center>
             </form>
-            <form>
-                <input type="button" onclick="mostrar()" class="add-to-cart" value="Otras revistas del creador" id="creare"
-                       name="creare" />
-            </form>
+            <center>
+                <form>
+                    <input type="button" onclick="mostrar2()" class="add-to-cart" value="Otras revistas del creador" id="creare"
+                           name="creare" />
+                </form>
+            </center>
+
+            <center>
+                <div id="vista1" name="vista1" style="display: none;">
+                    <%
+                        String user12 = u.getUser();
+                        int tiene = c.tieneRevistas(user12);
+                        if (tiene != 0) {%>
+                    <center>
+                        <ul>
+                            <%
+                                int[] ids = c.nombreRevs(user12, tiene);
+                                for (int i = 0; i < ids.length; i++) {
+                                    Revista revs = c.nombreRevistas(u.getUser(), ids[i]);
+                                    s.setAttribute("nombrever", revs);
+                            %>
+                            <li><a href="" >${nombrever.revista_name}</a></li>
+                                <%} %>
+                        </ul>
+                    </center>
+                    <%} else {%>
+                    <h3>No tiene mas revistas publicadas</h3>
+                    <%}%>
+                </div>
+            </center>
         </div>
         <script>
             function mostrarMensaje() {
@@ -193,6 +227,14 @@
             }
             function mostrar1() {
                 var x = document.getElementById('vista');
+                if (x.style.display === 'none') {
+                    x.style.display = 'block';
+                } else {
+                    x.style.display = 'none';
+                }
+            }
+            function mostrar2() {
+                var x = document.getElementById('vista1');
                 if (x.style.display === 'none') {
                     x.style.display = 'block';
                 } else {

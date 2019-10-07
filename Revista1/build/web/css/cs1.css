@@ -381,13 +381,15 @@ label{
 }
 
 #alerta,
-#alerta1{
+#alerta1,
+#vista1{
     margin-top:1 0px;
     display: none;
     width: 95%;
     background-color: #2b2142;
 }
-#vista{
+#vista,
+#vista1{
     margin: 10px;
     display: none;
     width: 100%;
@@ -760,4 +762,10 @@ h1{
 #rev{
     align-self: center;
     width: 20%;
+}
+#vista1 ul li a:hover{
+    font-size: 30px;
+}
+#vista1 ul li{
+    list-style: none;
 }

@@ -21,7 +21,7 @@ public class Versiones {
     private byte[] version2;
     private String fecha_pub;
     private String comentario;
-    
+    private int revista;
     public Versiones(){
     
     }
@@ -80,5 +80,14 @@ public class Versiones {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
+
+    public int getRevista() {
+        return revista;
+    }
+
+    public void setRevista(int revista) {
+        this.revista = revista;
+    }
+    
     
 }

@@ -119,10 +119,7 @@
                             <p><%out.print(nuevo[i].getRevista_name());%></p>
                             <p>Publicada: <%out.print(nuevo[i].getFecha_crea());%></p>
                             <p>Creada: <%out.print(nuevo[i].getId_creador());%></p>
-                            <form>
-                                <input type="button" onclick="mostrar1()" class="add-to-cart" value="Ver" id="creare"
-                                       name="creare" />
-                            </form>
+                            <a href="../Busqueda?revistar=<%out.print(nuevo[i].getId_revista());%>"><button>Ver Revista</button></a>
                         </center>
                     </div>
                 </center>
@@ -148,14 +145,13 @@
                 <center>
                     <div name="rev" id="rev" class="rev">
                         <center>
-                            <img src="../img/revista1.png" width="90px" heigth="90px" alt="imagen del pdf">
-                            <p>${nombrerev.revista_name}</p>
-                            <p>Publicada: ${nombrerev.publicada}</p>
-                            <p>Creada: ${nombrerev.fecha_crea}</p>
-                            <form>
-                                <input type="button" onclick="mostrar1()" class="add-to-cart" value="Ver" id="creare"
-                                       name="creare" />
-                            </form>
+                            <img src="../ControladorIMG?user=<%out.print(nuevou[i].getUser());%>" width="90px" heigth="90px" alt="imagen del pdf">
+                            <a href="../"><%out.print(nuevou[i].getUser());%></a>
+                            <p><%out.print(nuevou[i].getNombre());%></p>
+                            <%if (nuevou[i].getTipo().equalsIgnoreCase("E")) {%>
+                            <p>Editor</p>
+                            <%}%>
+                            <a href="../Busqueda?user=<%out.print(nuevou[i].getUser());%>"><button>Ver Perfil</button></a>
                         </center>
                     </div>
                 </center>

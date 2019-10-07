@@ -8,6 +8,7 @@ package Base;
 import Clases.Excepciones;
 import Clases.Revista;
 import Clases.Usuario;
+import Clases.Versiones;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -144,11 +145,14 @@ public class Conectado {
     public Usuario[] nombreU(String palabra){
         String sql = "SELECT user_name FROM Usuarios WHERE nombre LIKE '"+palabra+"%' OR nombre LIKE '%"+palabra+"%' OR nombre LIKE '%"+palabra+"' OR user_name LIKE '"+palabra+"%'";
         ArrayList<Usuario> nombreArrayList = new ArrayList<>();
+        int contador = 0;
         try{
             ps = db.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 nombreArrayList.add(aspectos(rs.getString("user_name")));
+                nombreArrayList.get(contador).setUser(rs.getString("user_name"));
+                contador++;
             }
         }catch(SQLException esla){
         
@@ -300,6 +304,7 @@ public class Conectado {
             while (rs.next()){
                 nombreArrayList.add(nombreRevistas(rs.getString("id_creador"),rs.getInt("id_revista")));
                 nombreArrayList.get(contador).setId_creador(rs.getString("id_creador"));
+                nombreArrayList.get(contador).setId_revista(rs.getInt("id_revista"));
                 contador++;
             }
         }catch(SQLException esl){
@@ -339,6 +344,40 @@ public class Conectado {
             ResultSet rs3 = ps.executeQuery();
             while(rs3.next()){
                 rev.setCategorias(rs3.getString(sql0));
+            }
+        }catch(SQLException el){
+        
+        }
+        return rev;
+    }
+    public Revista nombreRevistas(int revistas1){
+        Revista rev = new Revista();
+        rev.setId_revista(revistas1);
+        String sql = "SELECT id_creador,revista_name,categorias,descripcion,costo,fecha_crea,publicada FROM Revistas WHERE id_revista = ?";
+        int categorias = 0;
+        try{
+            ps = db.prepareStatement(sql);
+            ps.setInt(1, revistas1);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                rev.setRevista_name(rs.getString("revista_name"));
+                categorias = rs.getInt("categorias");
+                rev.setDescripcion(rs.getString("descripcion"));
+                rev.setCosto(rs.getDouble("costo"));
+                rev.setFecha_crea(rs.getDate("fecha_crea").toString());
+                rev.setPublicada(rs.getBoolean("publicada"));
+                rev.setId_creador(rs.getString("id_creador"));
+            }
+        }catch(SQLException esa){
+        
+        }
+        String sql0 = "SELECT nombre_cat FROM Categorias WHERE id_categoria = ?";
+        try{
+            ps = db.prepareStatement(sql0);
+            ps.setInt(1, categorias);
+            ResultSet rs3 = ps.executeQuery();
+            while(rs3.next()){
+                rev.setCategorias(rs3.getString("nombre_cat"));
             }
         }catch(SQLException el){
         
@@ -396,6 +435,45 @@ public class Conectado {
         } else {
         return (total>0 || total2>0);
         }
+    }
+    public Versiones[] rellenandoV(int id_revista){
+        String sql = "SELECT id_version FROM Versiones WHERE revista = ?";
         
+        ArrayList<Versiones> ver = new ArrayList<>();
+        try{
+            ps = db.prepareStatement(sql);
+            ps.setInt(1, id_revista);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ver.add(ver(rs.getInt("id_version")));
+            }
+        }catch(SQLException esa){
+        
+        }
+        int tam = ver.size();
+        Versiones[] vers = new Versiones[tam];
+        for (int i = 0; i < tam; i++){
+            vers[i] = ver.get(i);
+        }
+        return vers;
+    }
+    public Versiones ver(int id_version){
+        String sql = "SELECT * FROM Versiones WHERE id_version = ?";
+        Versiones ver = new Versiones();
+        try{
+            ps = db.prepareStatement(sql);
+            ps.setInt(1, id_version);
+            ResultSet rs1 = ps.executeQuery();
+            while(rs1.next()){
+                ver.setId_version(id_version);
+                ver.setFecha_pub(rs1.getString("fecha_pub"));
+                ver.setComentario(rs1.getString("comentario"));
+                ver.setVersion(rs1.getString("version"));
+                ver.setRevista(rs1.getInt("revista"));
+            }
+        }catch(SQLException esas){
+        
+        }
+        return ver;
     }
 }

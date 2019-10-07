@@ -5,6 +5,8 @@
  */
 package Servlets;
 
+import Base.Conectado;
+import Clases.Revista;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -31,12 +33,14 @@ public class Busqueda extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession s = request.getSession();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Busqueda</title>");            
+            out.println("<title>Servlet Busqueda</title>");   
+            out.println(s.getAttribute("invitacion"));
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Busqueda at " + request.getContextPath() + "</h1>");
@@ -57,7 +61,29 @@ public class Busqueda extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession s = request.getSession();
+        if (request.getParameter("user")!=null){
+            if (request.getParameter("user").equalsIgnoreCase(s.getAttribute("usuario").toString())){
+                response.sendRedirect("views/perfil.jsp");
+            } else {
+                String invitado = request.getParameter("user");
+                s.setAttribute("invitacion", invitado);
+                response.sendRedirect("views/perfili.jsp");
+            }   
+        }
+        Conectado db = new Conectado();
+        if (request.getParameter("revistar")!=null){
+            int revista = Integer.parseInt(request.getParameter("revistar"));
+            Revista revs = db.nombreRevistas(revista);
+            if (s.getAttribute("usuario").equals(revs.getId_creador())){
+                response.sendRedirect("views/perfil.jsp");
+            } else {
+                s.setAttribute("viendor", revs);
+                s.setAttribute("idcrear", revs.getId_creador());
+                s.setAttribute("idrev", revs.getId_revista());
+                response.sendRedirect("views/perfil-rev.jsp");
+            }
+        }
     }
 
     /**

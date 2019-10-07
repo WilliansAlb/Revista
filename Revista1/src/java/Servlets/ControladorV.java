@@ -5,6 +5,7 @@
  */
 package Servlets;
 
+import Base.Conectado;
 import Clases.Versiones;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -61,7 +63,12 @@ public class ControladorV extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession s = request.getSession();
+        Conectado c = new Conectado();
+        if (request.getParameter("idrevista")!=null){
+            s.setAttribute("versiont", c.ver(Integer.parseInt(request.getParameter("idrevista"))));
+            response.sendRedirect("views/perfil-rev.jsp");
+        }
     }
 
     /**
