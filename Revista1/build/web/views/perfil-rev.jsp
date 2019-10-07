@@ -39,6 +39,7 @@
             Usuario u = c.aspectos(s.getAttribute("idcrear").toString());
             u.setUser(s.getAttribute("idcrear").toString());
             s.setAttribute("creadorev", u);
+            s.setAttribute("costor", rev2.getCosto());
             Versiones[] version = c.rellenandoV(rev2.getId_revista());
         %>
         <%@include file="navbar1.jsp" %>
@@ -159,8 +160,8 @@
                 <center>
                     <div id="alerta">
                         <div class="group">
-                            <label for="dinerito" class="label">Cuanto será el monto que pagaras?</label>
-                            <input type="number" name="dinerito" id="dinerito" step="${viendor.getCosto()}" title="Al colocar cero la revista es gratis" min="0">
+                            <label for="dinerito1" class="label">Cuanto será el monto que pagaras?</label>
+                            <input type="number" name="dinerito1" id="dinerito1" step="${viendor.getCosto()}" title="Cada mes te cuesta ${viendor.getCosto()}" min="0">
                         </div>
                         <%
                             Date dNow = new Date();
@@ -170,8 +171,8 @@
                         %>
 
                         <div class="group">
-                            <label for="start" class="label">Fecha de pago</label>
-                            <input type="date" id="start" name="start" value="<%out.print(currentDate);%>" min="2008-01-01" max="<%out.print(currentDate);%>"
+                            <label for="start1" class="label">Fecha de pago</label>
+                            <input type="date" id="start1" name="start1" value="<%out.print(currentDate);%>" min="2008-01-01" max="<%out.print(currentDate);%>"
                                    required>
                         </div>
                         <div class="group">

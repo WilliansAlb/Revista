@@ -16,6 +16,10 @@
         <servlet-name>Busqueda</servlet-name>
         <servlet-class>Servlets.Busqueda</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Pagos</servlet-name>
+        <servlet-class>Servlets.Pagos</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ControladorIMG</servlet-name>
         <url-pattern>/ControladorIMG</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>Busqueda</servlet-name>
         <url-pattern>/Busqueda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Pagos</servlet-name>
+        <url-pattern>/Pagos</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
